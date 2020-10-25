@@ -1,60 +1,39 @@
 <template>
-  <div class="App">
-    <header class="App-header">
-      <img src="/logo.svg" class="App-logo" alt="logo" />
-      <p>
-        Edit
-        <code>src/App.vue</code> and save to reload.
-      </p>
-      <a
-        class="App-link"
-        href="https://vuejs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >{{ message }}</a>
-    </header>
-  </div>
+    <div class="w-screen h-screen flex">
+        <ChooseFolder @onFolderSelect="onFolderSelect" v-if="!hasChosenFolder"/>
+        <Editor :folder-handler="folderHandler" v-else/>
+    </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      message: "Learn Vue"
-    };
-  }
-};
-</script>
+<script lang="ts">
+  import { Options, Vue } from 'vue-class-component';
+  import ChooseFolder from './components/ChooseFolder.vue';
+  import Editor from './components/Editor.vue';
+  import { FileSystemDirectoryHandle } from './interface/FileSystemAPI';
+  import './style.css';
 
-<style>
-.App {
-  text-align: center;
-}
-.App-header {
-  background-color: #f9f6f6;
-  color: #32485f;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-.App-link {
-  color: #00c185;
-}
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-  margin-bottom: 1rem;
-  animation: App-logo-spin infinite 1.6s ease-in-out alternate;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: scale(1);
+  declare global {
+    interface Window {
+      showDirectoryPicker?: any
+    }
   }
-  to {
-    transform: scale(1.06);
+
+  @Options({
+    name: 'App',
+    components: {
+      ChooseFolder,
+      Editor,
+    },
+  })
+  export default class App extends Vue {
+    hasChosenFolder = false;
+    //If class member is undefined, it'll not be reactive, so using a dummy object
+    folderHandler: FileSystemDirectoryHandle | {} = {};
+
+    onFolderSelect(folderHandlerParam: FileSystemDirectoryHandle) {
+      this.hasChosenFolder = true;
+      this.folderHandler = folderHandlerParam;
+    }
   }
-}
-</style>
+
+</script>
