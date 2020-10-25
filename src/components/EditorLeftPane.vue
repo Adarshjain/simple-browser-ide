@@ -1,33 +1,25 @@
 <template>
     <div class="overflow-auto h-screen">
-        <FileItem
-                :fileHandler="item"
-                :fileType="item.kind"
-                :key="item.name"
-                v-for="item in folderMap.dirs"
-        />
-        <FileItem
-                :fileHandler="item"
-                :fileType="item.kind"
-                :key="item.name"
-                v-for="item in folderMap.files"
-        />
+        <DirectoryTree :directory="directory" @onExpand="$emit('onExpand',$event)"/>
     </div>
 </template>
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
-  import { FolderMap } from '../interface/AppInterface';
+  import { Directory } from '../interface/AppInterface';
   import { PropType } from 'vue';
   import FileItem from './FileItem.vue';
+  import DirectoryTree from './DirectoryTree.vue';
 
   @Options({
     name: 'EditorLeftPane',
     props: {
-      folderMap: Object as PropType<FolderMap>,
+      directory: Object as PropType<Directory>,
     },
     components: {
       FileItem,
+      DirectoryTree,
     },
+    emits: ['onExpand'],
   })
   export default class EditorLeftPane extends Vue {
 

@@ -1,13 +1,13 @@
 <template>
     <div class="w-screen h-screen flex">
-        <ChooseFolder @onFolderSelect="onFolderSelect" v-if="!hasChosenFolder"/>
-        <Editor :folder-handler="folderHandler" v-else/>
+        <ChooseDirectory @onDirectorySelect="onDirectorySelect" v-if="!hasChosenDirectory"/>
+        <Editor :directoryHandle="directoryHandle" v-else/>
     </div>
 </template>
 
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
-  import ChooseFolder from './components/ChooseFolder.vue';
+  import ChooseDirectory from './components/ChooseDirectory.vue';
   import Editor from './components/Editor.vue';
   import { FileSystemDirectoryHandle } from './interface/FileSystemAPI';
   import './style.css';
@@ -21,18 +21,18 @@
   @Options({
     name: 'App',
     components: {
-      ChooseFolder,
+      ChooseDirectory,
       Editor,
     },
   })
   export default class App extends Vue {
-    hasChosenFolder = false;
-    //If class member is undefined, it'll not be reactive, so using a dummy object
-    folderHandler: FileSystemDirectoryHandle | {} = {};
+    hasChosenDirectory = false;
+    //If a class member in vue is undefined, it'll not be reactive, so using a dummy object
+    directoryHandle: FileSystemDirectoryHandle | {} = {};
 
-    onFolderSelect(folderHandlerParam: FileSystemDirectoryHandle) {
-      this.hasChosenFolder = true;
-      this.folderHandler = folderHandlerParam;
+    onDirectorySelect(directoryHandle: FileSystemDirectoryHandle) {
+      this.hasChosenDirectory = true;
+      this.directoryHandle = directoryHandle;
     }
   }
 
