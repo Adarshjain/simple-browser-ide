@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts">
-  import { fetchDir } from '../helpers/fsHelper';
+  import { fetchDir } from '@/helpers/fsHelper';
   import { Options, Vue } from 'vue-class-component';
 
   @Options({

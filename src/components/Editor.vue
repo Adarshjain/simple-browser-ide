@@ -1,14 +1,15 @@
 <template>
-    <EditorLeftPane :directory="directory" @onExpand="expandDir" class="w-1/4"/>
-    <div>Data content</div>
+    <EditorLeftPane :directory="directory" @onExpand="expandDir" @onFileClick="onFileClick" class="w-1/4"/>
+    <EditorMain :fileHandle="fileHandle" v-if="fileHandle !== -1"/>
 </template>
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
   import { PropType } from 'vue';
-  import { FileSystemDirectoryHandle, FileSystemHandleKind } from '../interface/FileSystemAPI';
-  import { Directory } from '../interface/AppInterface';
-  import EditorLeftPane from './EditorLeftPane.vue';
-  import { clone, sortFn } from '../helpers/common';
+  import { FileSystemDirectoryHandle, FileSystemHandle, FileSystemHandleKind } from '@/interface/FileSystemAPI';
+  import { Directory } from '@/interface/AppInterface';
+  import EditorLeftPane from '@/components/EditorLeftPane.vue';
+  import EditorMain from '@/components/EditorMain.vue';
+  import { clone, sortFn } from '@/helpers/common';
 
   @Options({
     name: 'Editor',
@@ -19,6 +20,7 @@
     },
     components: {
       EditorLeftPane,
+      EditorMain,
     },
     emits: ['onExpand'],
   })
@@ -32,6 +34,7 @@
       path: [],
       hasPopulated: false,
     };
+    fileHandle: FileSystemHandle | number = -1;
 
     async mounted() {
       await this.populateMap(this.directoryHandle, this.directory);
@@ -87,6 +90,10 @@
           return await this.findDirectoryInMap(innerDir, path);
         }
       }
+    }
+
+    onFileClick(fileHandle: FileSystemHandle) {
+      this.fileHandle = fileHandle;
     }
 
   }

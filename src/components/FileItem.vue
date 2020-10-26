@@ -8,7 +8,7 @@
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
   import { PropType } from 'vue';
-  import { FileSystemHandle } from '../interface/FileSystemAPI';
+  import { FileSystemHandle } from '@/interface/FileSystemAPI';
 
   @Options({
     name: 'FileItem',
