@@ -9,7 +9,7 @@
     </div>
 </template>
 <script lang="ts">
-  import { fetchDir } from '@/helpers/fsHelper';
+  import { fetchDir, getPermission } from '@/helpers/fsHelper';
   import { Options, Vue } from 'vue-class-component';
 
   @Options({
@@ -19,7 +19,13 @@
   export default class ChooseDirectory extends Vue {
     async chooseDirectory() {
       try {
-        this.$emit('onDirectorySelect', await fetchDir());
+        const dir = await fetchDir();
+        const permission = await getPermission(dir);
+        if (!permission) {
+          alert('Edit permission required!');
+          return;
+        }
+        this.$emit('onDirectorySelect', dir);
       } catch (e) {
         console.log(e);
       }

@@ -5,6 +5,7 @@
   import * as Monaco from 'monaco-editor';
   import { Options, Vue } from 'vue-class-component';
   import { FileSystemHandle } from '@/interface/FileSystemAPI';
+  import { writeToFile } from '@/helpers/fsHelper';
   import IStandaloneCodeEditor = Monaco.editor.IStandaloneCodeEditor;
 
   @Options<MonacoEditor>({
@@ -31,6 +32,20 @@
   export default class MonacoEditor extends Vue {
     editor: IStandaloneCodeEditor | undefined = undefined;
     fileHandle!: FileSystemHandle;
+
+    mounted() {
+      window.addEventListener('keyup', async event => {
+        if (event.ctrlKey && event.key == 's') { //ctrl + s key to save
+          if (this.editor !== undefined) {
+            const value = this.editor.getValue();
+            await writeToFile(this.fileHandle, value);
+            event.preventDefault();
+            return false;
+          }
+        }
+      });
+    }
+
 
     async loadEditor(
       editor: IStandaloneCodeEditor | undefined,

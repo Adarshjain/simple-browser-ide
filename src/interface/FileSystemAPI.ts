@@ -45,7 +45,14 @@ export interface FileSystemHandle {
   kind: FileSystemHandleKind
   name: string
   getFile: () => Promise<File>
-  createWritable: (option: FileSystemCreateWritableOptions) => FileSystemWritableFileStream
+  createWritable: (option?: FileSystemCreateWritableOptions) => FileSystemWritableFileStream & WritableStream
+}
+
+export interface WritableStream {
+  readonly locked: boolean
+  abort: (reason?: any) => Promise<undefined>
+  close: () => Promise<undefined>;
+  getWriter: () => WritableStreamDefaultWriter;
 }
 
 export interface FileSystemCreateWritableOptions {

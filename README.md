@@ -9,14 +9,15 @@ Simple browser based IDE poc leveraging JavaScript's new FileSystemAccess API.
 
 ### TODO
 - [ ] Update Readme
-- [ ] List down directory and files
-- [ ] Integrate monaco editor
-- [ ] Write to file
+- [x] List down directory and files
+- [x] Integrate monaco editor
+- [x] Write to file
 - [ ] Context menu -> New, delete
 - [ ] Clean UI
-- [ ] Tabs
+- [x] Tabs
 - [ ] PWA
-
+- [ ] Editing state
+- [ ] Store local changes
 
 ### TODO long term
 - [ ] Search files
@@ -24,3 +25,5 @@ Simple browser based IDE poc leveraging JavaScript's new FileSystemAccess API.
 - [ ] Create new project/file
 - [ ] Toolbar with options
 - [ ] Explore more exciting features to add
+- [ ] Persist IDE state
+- [ ] Read only mode
