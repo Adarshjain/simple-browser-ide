@@ -1,10 +1,9 @@
 <template>
-    <EditorLeftPane :directory="directory" @onExpand="expandDir" @onFileClick="onFileClick" class="w-1/4"/>
-    <EditorMain :fileHandle="fileHandle" v-if="fileHandle !== -1"/>
+    <EditorLeftPane :directory="directory" @onExpand="expandDir" @onFileClick="onFileClick" style="width: 200px"/>
+    <EditorMain :fileHandler="fileHandle" v-if="fileHandle !== -1"/>
 </template>
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
-  import { PropType } from 'vue';
   import { FileSystemDirectoryHandle, FileSystemHandle, FileSystemHandleKind } from '@/interface/FileSystemAPI';
   import { Directory } from '@/interface/AppInterface';
   import EditorLeftPane from '@/components/EditorLeftPane.vue';
@@ -13,11 +12,7 @@
 
   @Options({
     name: 'Editor',
-    props: {
-      directoryHandle: {
-        type: Object as PropType<FileSystemDirectoryHandle>,
-      },
-    },
+    props: ['directoryHandle'],
     components: {
       EditorLeftPane,
       EditorMain,
@@ -59,6 +54,7 @@
           });
           loadInto.dirs.sort((itemA, itemB) => sortFn((itemA.self?.name || ''), (itemB.self?.name || '')));
         } else {
+          entry.path = [...loadInto.path, entry.name];
           loadInto.files.push(entry);
           loadInto.files.sort((itemA, itemB) => sortFn(itemA.name, itemB.name));
         }

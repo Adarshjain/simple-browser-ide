@@ -16,6 +16,7 @@ module.exports = {
   entry: {
     app: './src/index.ts',
   },
+  devtool: 'cheap-module-eval-source-map',
   output: {
     globalObject: 'self',
     path: resolve('./public/dist/'),
@@ -67,7 +68,6 @@ module.exports = {
     compress: true,
     port: 2134,
   },
-  devtool: 'inline-source-map',
   module: {
     rules: [
       {

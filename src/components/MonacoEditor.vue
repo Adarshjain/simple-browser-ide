@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-full"></div>
+    <div class="w-full" style="flex: 1"></div>
 </template>
 <script lang="ts">
   import * as Monaco from 'monaco-editor';
@@ -14,7 +14,16 @@
       fileHandle: {
         immediate: true,
         async handler(newValue) {
-          this.editor = await this.loadEditor(this.editor, newValue);
+          if (newValue.kind !== 'file') {
+            if (this.editor !== undefined) {
+              this.editor.dispose();
+            }
+            return;
+          }
+          const editor = await this.loadEditor(this.editor, newValue);
+          if (editor !== undefined) {
+            this.editor = editor;
+          }
         },
       },
     },
@@ -26,7 +35,7 @@
     async loadEditor(
       editor: IStandaloneCodeEditor | undefined,
       fileHandle: FileSystemHandle,
-    ): Promise<IStandaloneCodeEditor> {
+    ): Promise<IStandaloneCodeEditor | undefined> {
       //Clearing existing model
       Monaco.editor.getModels().forEach(model => model.dispose());
       let content = await (await fileHandle.getFile()).text();
@@ -40,10 +49,11 @@
           model,
           theme: 'vs-dark',
         });
+        return editor;
       } else {
         editor.setModel(model);
       }
-      return editor;
+
     }
   }
 </script>

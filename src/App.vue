@@ -37,3 +37,9 @@
   }
 
 </script>
+<style>
+    body {
+        background-color: #1F1F1F;
+        color: #FFFFFF;
+    }
+</style>

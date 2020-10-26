@@ -24,16 +24,12 @@
 </template>
 <script lang="ts">
   import { Options, Vue } from 'vue-class-component';
-  import { Directory } from '@/interface/AppInterface';
-  import { PropType } from 'vue';
   import FileItem from '@/components/FileItem.vue';
   import DirectoryItem from '@/components/DirectoryItem.vue';
 
   @Options<DirectoryTree>({
     name: 'DirectoryTree',
-    props: {
-      directory: Object as PropType<Directory>,
-    },
+    props: ['directory'],
     components: {
       FileItem,
       DirectoryItem,

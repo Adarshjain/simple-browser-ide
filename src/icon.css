@@ -1,0 +1,9 @@
+.icon {
+    min-width: 1.25rem;
+    @apply h-5 w-5 mr-1;
+}
+
+.icon--small {
+    min-width: 0.75rem;
+    @apply h-5 w-3 mr-1;
+}
