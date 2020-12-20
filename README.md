@@ -7,6 +7,13 @@ Simple browser based IDE poc leveraging JavaScript's new FileSystemAccess API.
 - [Vue 3]("https://v3.vuejs.org/" "Vue 3")
 - [Monaco Editor]("https://microsoft.github.io/monaco-editor/")
 
+### Run app
+Step 1
+```
+npm run w
+```
+Step 2 : Run simple http server with public folder as root
+
 ### TODO
 - [ ] Update Readme
 - [x] List down directory and files
